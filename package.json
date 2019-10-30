@@ -1,0 +1,24 @@
+{
+  "name": "webpack4",
+  "version": "1.0.0",
+  "description": "webpack4.0 干货集合",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lijiacen/webpack4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lijiacen/webpack4/issues"
+  },
+  "homepage": "https://github.com/lijiacen/webpack4#readme",
+  "devDependencies": {
+    "loader-utils": "^1.2.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  }
+}
