@@ -5,6 +5,9 @@ module.exports = {
   entry: {
     main: "./src/index.js"
   },
+  resolveLoader: {
+    modules: ["node_module", "./loaders"]
+  },
   module: {
     rules: [
       {
@@ -12,7 +15,12 @@ module.exports = {
         use: [
           //path.resolve(__dirname, "./loaders/loader.js")
           {
-            loader: path.resolve(__dirname, "./loaders/loader.js"),
+            //loader: path.resolve(__dirname, "./loaders/loader.js")
+            loader: "loader"
+          },
+          {
+            //loader: path.resolve(__dirname, "./loaders/loaderAsync.js"),
+            loader: "loaderAsync",
             options: {
               name: "lijiacen"
             }
