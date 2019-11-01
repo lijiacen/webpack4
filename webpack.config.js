@@ -1,10 +1,12 @@
 const path = require("path");
+const CopyRightWebpackPlugin = require("./plugins/copyright-webpack-plugin");
 
 module.exports = {
   mode: "production",
   entry: {
     main: "./src/index.js"
   },
+  plugins: [new CopyRightWebpackPlugin({ name: "li" })],
   resolveLoader: {
     modules: ["node_module", "./loaders"]
   },
