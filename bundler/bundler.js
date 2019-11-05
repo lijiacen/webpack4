@@ -12,7 +12,7 @@ const moduleAnalyser = filename => {
   const ast = parser.parse(content, {
     sourceType: "module"
   });
-  console.log(ast.program.body);
+  //console.log(ast.program.body);
 
   const dependencies = {};
 
@@ -36,4 +36,28 @@ const moduleAnalyser = filename => {
   };
 };
 
+//递归获取 Dependencies Graph(依赖图谱)
+const makeDependenciesGraph = entry => {
+  const entryModule = moduleAnalyser(entry);
+  const graphArr = [entryModule];
+  for (let i = 0; i < graphArr.length; i++) {
+    const item = graphArr[i];
+    const { dependencies } = item;
+    if (dependencies) {
+      for (let j in dependencies) {
+        graphArr.push(moduleAnalyser(dependencies[j]));
+      }
+    }
+  }
+  const graph = {};
+  graphArr.forEach(item => {
+    graph[item.filename] = {
+      dependencies: item.dependencies,
+      code: item.code
+    };
+  });
+  return graph;
+};
+
 console.log(moduleAnalyser("./bundler/src/index.js"));
+console.log(makeDependenciesGraph("./bundler/src/index.js"));
