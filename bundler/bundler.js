@@ -36,7 +36,7 @@ const moduleAnalyser = filename => {
   };
 };
 
-//递归获取 Dependencies Graph(依赖图谱)
+//递归获取DependenciesGraph(依赖图谱)
 const makeDependenciesGraph = entry => {
   const entryModule = moduleAnalyser(entry);
   const graphArr = [entryModule];
@@ -59,5 +59,26 @@ const makeDependenciesGraph = entry => {
   return graph;
 };
 
-console.log(moduleAnalyser("./bundler/src/index.js"));
-console.log(makeDependenciesGraph("./bundler/src/index.js"));
+const generateCode = entry => {
+  const graph = JSON.stringify(makeDependenciesGraph(entry));
+  return `
+  (function(graph){
+    function require(module){
+      function localRequire(relativePath){
+        return require(graph[module].dependencies[relativePath]);
+      }
+      var exports = {};
+      (function(require,exports,code){
+        eval(code) 
+      })(localRequire,exports,graph[module].code)
+      return exports;
+    };
+    require('${entry}')
+  })(${graph})`;
+};
+
+// console.log(moduleAnalyser("./bundler/src/index.js"));
+// console.log(makeDependenciesGraph("./bundler/src/index.js"));
+
+const code = generateCode("./bundler/src/index.js");
+console.log(code);
