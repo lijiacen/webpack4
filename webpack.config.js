@@ -8,10 +8,21 @@ module.exports = {
   },
   plugins: [new CopyRightWebpackPlugin({ name: "li" })],
   resolveLoader: {
-    modules: ["node_module", "./loaders"]
+    modules: ["node_modules", "./loaders"]
   },
   module: {
     rules: [
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: {
+          loader: "url-loader", //url-loader和file-loader都可以打包图片，区别是url-loader会将图片以base64打包到js文件中，当图片过大时，打包的js文件也会过大。
+          options: {
+            name: "[name].[hash].[ext]",
+            outputPath: "img/",
+            limit: 1024000 //所以最佳实践是：将小图片打包为base64，大于某个值的文件打包为图片。如果在配置中不加limit，所有图片都会打包为base64。
+          }
+        }
+      },
       {
         test: /\.js/,
         use: [
