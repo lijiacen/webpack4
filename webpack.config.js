@@ -45,6 +45,25 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.scss$/,
+        //postcss-loader为样式加上浏览器前缀；sass-loader将sass编译为css；css-loader理清css文件的应用关系并合并；style-loader将样式挂载到style标签中
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true //开启css的模块化打包
+            }
+          },
+          "sass-loader",
+          "postcss-loader"
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
