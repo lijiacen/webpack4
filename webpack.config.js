@@ -1,6 +1,7 @@
 const path = require("path");
 const CopyRightWebpackPlugin = require("./plugins/copyright-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   // mode: "production",
@@ -11,6 +12,11 @@ module.exports = {
     new CopyRightWebpackPlugin({ name: "li" }),
     new HtmlWebpackPlugin({
       template: "src/index.html"
+    }),
+    new CleanWebpackPlugin({
+      dry: false,
+      cleanOnceBeforeBuildPatterns: ["../dist"],
+      dangerouslyAllowCleanPatternsOutsideProject: true
     })
   ],
   resolveLoader: {
